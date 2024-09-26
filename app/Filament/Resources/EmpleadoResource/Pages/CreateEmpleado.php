@@ -9,5 +9,4 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateEmpleado extends CreateRecord
 {
     protected static string $resource = EmpleadoResource::class;
-
 }

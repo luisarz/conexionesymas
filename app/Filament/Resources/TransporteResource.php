@@ -95,13 +95,22 @@ class TransporteResource extends Resource
             //
         ];
     }
+    public static function getFilters(): array
+    {
+        return [
+            //
+            SelectFilter::make('rutas')
+                ->relationship('ruta', 'name'),
+
+        ];
+    }
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListTransportes::route('/'),
             'create' => Pages\CreateTransporte::route('/create'),
-            'view' => Pages\ViewTransporte::route('/{record}'),
+            // 'view' => Pages\ViewTransporte::route('/{record}'),
             'edit' => Pages\EditTransporte::route('/{record}/edit'),
         ];
     }

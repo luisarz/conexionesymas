@@ -13,4 +13,8 @@ class CargosLaborales extends Model
     {
         return $this->hasMany(Empleado::class);
     }
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class);
+    }
 }

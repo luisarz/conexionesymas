@@ -13,22 +13,18 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\SelectFilter;
+
 
 class EmpleadoResource extends Resource
 {
     protected static ?string $model = Empleado::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
-
-    protected static ?string $navigationGroup = 'Configuración';
-    protected static ?string $navigationGroupIcon = 'heroicon-o-cog';
-
-    protected static ?int $navigationSort = 5;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
-
             ->schema([
 
                 Wizard::make([
@@ -51,11 +47,17 @@ class EmpleadoResource extends Resource
                                         ->label('Nombres')
                                         ->maxLength(255),
 
+
                                     Forms\Components\TextInput::make('lastname')
                                         ->required()
                                         ->label('Apellidos')
                                         ->maxLength(255),
-                                    Forms\Components\TextInput::make('gender')
+                                    Forms\Components\Select::make('gender')
+                                        ->options([
+                                            'M' => 'Masculino',
+                                            'F' => 'Femenino',
+                                        ])
+                                        ->default('M')
                                         ->required(),
                                     Forms\Components\TextInput::make('dui')
                                         ->required()
@@ -83,86 +85,89 @@ class EmpleadoResource extends Resource
                                                 ->pluck('name', 'id'); // Adjust to match your Distrito model fields
                                         })
                                         ->preload(),
+                                    Forms\Components\TextInput::make('email')
+                                        ->email()
+                                        ->required()
+                                        ->maxLength(255),
+                                    Forms\Components\TextInput::make('phone')
+                                        ->tel()
+                                        ->required()
+                                        ->maxLength(255),
+                                    Forms\Components\TextInput::make('address')
+                                        ->required()
+                                        ->maxLength(255),
+                                    Forms\Components\FileUpload::make('photo')
+                                        ->image()
+                                        ->avatar()
+                                        ->imageEditor()
+                                        ->imageEditorAspectRatios([
+                                            '16:9',
+                                            '4:3',
+                                            '1:1',
+                                        ])
+                                        ->columnSpanFull(),
+                                    Forms\Components\DatePicker::make('birthdate')
+                                        ->default(now())
+                                        ->required(),
+                                    Forms\Components\Select::make('marital_status')
+                                        ->options([
+                                            'Soltero/a' => 'Soltero/a',
+                                            'Casado/a' => 'Casado/a',
+                                            'Divorciado/a' => 'Divorciado/a',
+                                            'Viudo/a' => 'Viudo/a',
+                                        ])->default('Soltero/a')
+                                        ->required(),
+                                    Forms\Components\TextInput::make('marital_name')
+                                        ->maxLength(255),
+                                    Forms\Components\TextInput::make('marital_phone')
+                                        ->tel()
+                                        ->maxLength(255),
+
+                                    Forms\Components\TextInput::make('afp')
+                                        ->numeric()
+                                        ->maxLength(255),
+                                    Forms\Components\TextInput::make('isss')
+                                        ->required()
+                                        ->maxLength(255),
+                                    Forms\Components\TextInput::make('nrc')
+                                        ->numeric(),
+                                    Forms\Components\TextInput::make('salary_day')
+                                        ->required()
+                                        ->numeric(),
+                                    Forms\Components\TextInput::make('salary_month')
+                                        ->required()
+                                        ->numeric(),
+                                    Forms\Components\TextInput::make('contract')->nullable()
+                                        ->maxLength(255),
+                                    Forms\Components\DatePicker::make('contract_start')
+                                        ->required()
+                                        ->default(now()),
+                                    Forms\Components\DatePicker::make('contract_end'),
+                                    Forms\Components\DatePicker::make('vacation_start'),
+                                    Forms\Components\DatePicker::make('vacation_end'),
+                                    Forms\Components\TextInput::make('salary_xtra_hour_day')
+                                        ->required()
+                                        ->numeric(),
+                                    Forms\Components\TextInput::make('salary_xtra_hour_night')
+                                        ->required()
+                                        ->numeric(),
+                                    Forms\Components\FileUpload::make('contract_file')
+                                        ->directory('contract')
+                                        ->required(),
+                                    Forms\Components\Toggle::make('is_active')
+                                        ->required(),
+
+                                    Forms\Components\BelongsToSelect::make('cargo_id')
+                                        ->relationship('cargo', 'name')
+                                        ->required(),
                                 ]),
 
                             ]),
 
-
                         ]),
                     Wizard\Step::make('Datos Generales')
                         ->schema([
-                            Forms\Components\TextInput::make('email')
-                                ->email()
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('phone')
-                                ->tel()
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('address')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\Textarea::make('photo')
-                                ->required()
-                                ->columnSpanFull(),
-                            Forms\Components\DatePicker::make('birthdate')
-                                ->required(),
-                                Forms\Components\TextInput::make('marital_status')
-                                ->required(),
-                            Forms\Components\TextInput::make('marital_name')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('marital_phone')
-                                ->tel()
-                                ->required()
-                                ->maxLength(255),
 
-                            Forms\Components\TextInput::make('afp')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('isss')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('nrc')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('salary_day')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('salary_month')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('contract')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('contract_start')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('contract_end')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('vacation_start')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('vacation_end')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('salary_xtra_hour_day')
-                                ->required()
-                                ->numeric(),
-                            Forms\Components\TextInput::make('salary_xtra_hour_night')
-                                ->required()
-                                ->numeric(),
-                            Forms\Components\TextInput::make('contract_file')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('is_active')
-                                ->required()
-                                ->maxLength(255),
-
-                            Forms\Components\TextInput::make('cargo_id')
-                                ->required()
-                                ->numeric(),
                         ]),
                     Wizard\Step::make('Informacion laboral')
                         ->schema([
@@ -178,71 +183,52 @@ class EmpleadoResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('empresa.name')
+                ->wrap()                    ->sortable(),
+                Tables\Columns\TextColumn::make('cargo.name')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->getStateUsing(function (Empleado $record) {
+                        return $record->fullName();
+                    })
+                    ->wrap()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('lastname')
+                Tables\Columns\ImageColumn::make('photo')
+                ->circular(),
+                Tables\Columns\TextColumn::make('dui')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
+                    ->toggleable(isToggledHiddenByDefault: true)
+
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
-                Tables\Columns\TextColumn::make('birthdate')
+                // Tables\Columns\TextColumn::make('birthdate')
+                //     ->date()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('gender'),
+                Tables\Columns\TextColumn::make('marital_status')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('contract_start')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('gender'),
-                Tables\Columns\TextColumn::make('marital_status'),
-                Tables\Columns\TextColumn::make('marital_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('marital_phone')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('dui')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nit')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('afp')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('isss')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nrc')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('salary_day')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('salary_month')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('contract')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('contract_start')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('contract_end')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('vacation_start')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('vacation_end')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('salary_xtra_hour_day')
+
+                Tables\Columns\IconColumn::make('is_active')
+                    ->boolean(),
+                // Tables\Columns\TextColumn::make('departamento.name')
+                //     ->numeric()
+                //     ->sortable(),
+                Tables\Columns\TextColumn::make('distrito.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('salary_xtra_hour_night')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('contract_file')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('is_active')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('departamento_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('distrito_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('empresa_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('cargo_id')
-                    ->numeric()
-                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -253,11 +239,17 @@ class EmpleadoResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('cargo_id')
+                    ->relationship('cargo', 'name')
+                    ->label('Cargo'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\EditAction::make(),
+
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -278,7 +270,6 @@ class EmpleadoResource extends Resource
         return [
             'index' => Pages\ListEmpleados::route('/'),
             'create' => Pages\CreateEmpleado::route('/create'),
-            'view' => Pages\ViewEmpleado::route('/{record}'),
             'edit' => Pages\EditEmpleado::route('/{record}/edit'),
         ];
     }

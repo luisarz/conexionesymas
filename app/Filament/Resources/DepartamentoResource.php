@@ -85,8 +85,8 @@ class DepartamentoResource extends Resource
     {
         return [
             'index' => Pages\ListDepartamentos::route('/'),
-            'create' => Pages\CreateDepartamento::route('/create'),
-            'edit' => Pages\EditDepartamento::route('/{record}/edit'),
+            // 'create' => Pages\CreateDepartamento::route('/create'),
+            // 'edit' => Pages\EditDepartamento::route('/{record}/edit'),
         ];
     }
 }

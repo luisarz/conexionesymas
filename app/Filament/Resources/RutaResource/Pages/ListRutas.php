@@ -21,7 +21,7 @@ class ListRutas extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            RutaOverview::class,
+            // RutaOverview::class,
         ];
     }
 }

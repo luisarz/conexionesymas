@@ -70,9 +70,9 @@ class ProfesionesResource extends Resource
     {
         return [
             'index' => Pages\ListProfesiones::route('/'),
-            'create' => Pages\CreateProfesiones::route('/create'),
-            'view' => Pages\ViewProfesiones::route('/{record}'),
-            'edit' => Pages\EditProfesiones::route('/{record}/edit'),
+            // 'create' => Pages\CreateProfesiones::route('/create'),
+            // 'view' => Pages\ViewProfesiones::route('/{record}'),
+            // 'edit' => Pages\EditProfesiones::route('/{record}/edit'),
         ];
     }
 }

@@ -11,7 +11,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Resources\RutaResource\Widgets\RutasOverview;
 class RutaResource extends Resource
 {
     protected static ?string $model = Ruta::class;
@@ -79,12 +78,12 @@ class RutaResource extends Resource
         ];
     }
 
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListRutas::route('/'),
             'create' => Pages\CreateRuta::route('/create'),
-            'view' => Pages\ViewRuta::route('/{record}'),
             'edit' => Pages\EditRuta::route('/{record}/edit'),
         ];
     }
@@ -92,7 +91,6 @@ class RutaResource extends Resource
     public static function getWidget(): array
     {
         return [
-            RutasOverview::class,
         ];
     }
 }

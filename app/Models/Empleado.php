@@ -43,10 +43,15 @@ class Empleado extends Model
 
     ];
     protected $casts = [
-        'photo' => 'array'
+        'photo' => 'array',
+        'contract_file' => 'array'
     ];
+    public function fullName()
+    {
+        return $this->name . ' ' . $this->lastname;
+    }
 
-    public function cargoLaboral()
+    public function cargo()
     {
         return $this->belongsTo(CargosLaborales::class);
     }
