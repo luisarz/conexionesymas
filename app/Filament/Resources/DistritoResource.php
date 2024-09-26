@@ -35,7 +35,7 @@ class DistritoResource extends Resource
                     ->label('Nombre distrito')
                     ->required()
                     ->maxLength(255),
-                    Forms\Components\BelongsToSelect::make('departamento')
+                    Forms\Components\BelongsToSelect::make('departamento_id')
                     ->relationship('departamento', 'name')
                     ->label('Departamento')
                     ->searchable()

@@ -11,7 +11,7 @@ class Distrito extends Model
     protected $fillable = [
         'code',
         'name',
-        'departamento',
+        'departamento_id',
     ];
     public function departamento()
     {
