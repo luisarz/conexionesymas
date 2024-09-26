@@ -19,7 +19,7 @@ class EmpresaResource extends Resource
 
     protected static ?string $navigationGroup = 'Configuración';
 
-    protected static ?string $label = 'Global Empresa';
+    protected static ?string $label = 'Administración de Empresas';
 
     protected static ?int $navigationSort  = 1;
 
@@ -132,8 +132,12 @@ class EmpresaResource extends Resource
             //     //
             // ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    // Tables\Actions\ReplicateAction::make(),
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ]);
     }
 
