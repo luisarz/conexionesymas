@@ -65,10 +65,17 @@ class DistritoResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('departamento_id')
+                    ->relationship('departamento', 'name')
+                    ->preload()
+                    ->searchable()
+                    ->label('Departamento')
+                    ->default(''),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ReplicateAction::make(),
+
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
