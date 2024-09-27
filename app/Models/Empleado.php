@@ -38,6 +38,7 @@ class Empleado extends Model
         'is_active',
         'departamento_id',
         'distrito_id',
+        'profesion_id',
         'empresa_id',
         'cargo_id'
 

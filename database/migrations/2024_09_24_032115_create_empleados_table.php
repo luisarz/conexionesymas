@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('address');
-            $table->json('photo');
+            $table->json('photo')->nullable();
             $table->date('birthdate')->nullable();
             $table->enum('gender', ['M', 'F'])->default('M');
             $table->enum('marital_status', ['Soltero/a', 'Casado/a', 'Divorciado/a', 'Viudo/a'])->default('Soltero/a');
@@ -38,10 +38,11 @@ return new class extends Migration
             $table->date('vacation_end')->nullable();
             $table->decimal('salary_xtra_hour_day', 10, 2);
             $table->decimal('salary_xtra_hour_night', 10, 2);
-            $table->json('contract_file');
+            $table->json('contract_file')->nullable();
             $table->boolean('is_active')->default(true);
             $table->foreignId('departamento_id')->constrained('departamentos')->cascadeOnDelete();
             $table->foreignId('distrito_id')->constrained('distritos')->cascadeOnDelete();
+            $table->foreignId('profesion_id')->constrained('profesiones')->cascadeOnDelete();
             $table->foreignId('empresa_id')->constrained('empresas')->cascadeOnDelete();
             $table->foreignId('cargo_id')->constrained('empleados')->cascadeOnDelete();
             $table->timestamps();

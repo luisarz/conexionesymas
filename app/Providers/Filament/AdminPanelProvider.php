@@ -58,22 +58,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
-                FilamentShieldPlugin::make()
-                    ->gridColumns([
-                        'default' => 2,
-                        // 'sm' => 1,
-                        // 'lg' => 2,
-                    ])
-                    ->sectionColumnSpan(1)
-                    ->checkboxListColumns([
-                        'default' => 1,
-                        // 'sm' => 2,
-                        // 'lg' => 2,
-                    ])
-                    ->resourceCheckboxListColumns([
-                        'default' => 1,
-                        // 'sm' => 1,
-                    ]),
+                FilamentShieldPlugin::make(),
+
             ]);
     }
 
