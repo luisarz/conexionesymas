@@ -9,4 +9,8 @@ class Profesiones extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class);
+    }
 }

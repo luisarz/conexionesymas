@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('nit');
             $table->string('afp');
             $table->string('isss');
-            $table->string('nrc');
+            $table->string('nrc')->nullable();
             $table->string('salary_day');
             $table->string('salary_month');
             $table->string('contract');

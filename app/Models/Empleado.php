@@ -56,10 +56,7 @@ class Empleado extends Model
     {
         return $this->belongsTo(CargosLaborales::class);
     }
-    public function profesiones()
-    {
-        return $this->belongsToMany(Profesiones::class);
-    }
+
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);
@@ -71,6 +68,10 @@ class Empleado extends Model
     public function distrito()
     {
         return $this->belongsTo(Distrito::class);
+    }
+    public function profesion()
+    {
+        return $this->belongsTo(Profesiones::class);
     }
 
 }
