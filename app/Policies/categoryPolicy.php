@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\category;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CategoryPolicy
+class categoryPolicy
 {
     use HandlesAuthorization;
 
@@ -21,7 +21,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Category $category): bool
+    public function view(User $user, category $category): bool
     {
         return $user->can('view_category');
     }
@@ -37,7 +37,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Category $category): bool
+    public function update(User $user, category $category): bool
     {
         return $user->can('update_category');
     }
@@ -45,7 +45,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Category $category): bool
+    public function delete(User $user, category $category): bool
     {
         return $user->can('delete_category');
     }
@@ -61,7 +61,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Category $category): bool
+    public function forceDelete(User $user, category $category): bool
     {
         return $user->can('force_delete_category');
     }
@@ -77,7 +77,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Category $category): bool
+    public function restore(User $user, category $category): bool
     {
         return $user->can('restore_category');
     }
@@ -93,7 +93,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Category $category): bool
+    public function replicate(User $user, category $category): bool
     {
         return $user->can('replicate_category');
     }
