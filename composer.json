@@ -6,12 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^3.0",
         "bezhansalleh/filament-shield": "^3.2",
         "filament/filament": "^3.2",
+        "filament/notifications": "^3.2",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
-        "livewire/volt": "^1.0"
+        "livewire/volt": "^1.0",
+        "shuvroroy/filament-spatie-laravel-backup": "^2.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

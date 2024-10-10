@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\generarContratoController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -13,3 +14,6 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 require __DIR__.'/auth.php';
+Route::get('/generate-pdf/{record}',
+    [generarContratoController::class, 'generate'])
+    ->name('empleado.contrato.generate');

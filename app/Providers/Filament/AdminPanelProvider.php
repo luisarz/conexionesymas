@@ -6,6 +6,7 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -18,6 +19,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
+use ShuvroRoy\FilamentSpatieLaravelBackup\Pages\Backups;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -28,6 +31,11 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
+
+        ->profile()
+//            ->isSidebarFullyCollapsibleOnDesktop(true)
             ->sidebarCollapsibleOnDesktop(true)
             ->colors([
                 'primary' => Color::Amber,
@@ -60,8 +68,28 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 FilamentShieldPlugin::make(),
+                FilamentSpatieLaravelBackupPlugin::make()
+                    ->usingPage(Backups::class)
 
-            ]);
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Seguridad')
+                    ->icon('heroicon-o-shopping-cart')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Recursos Humanos')
+                    ->icon('heroicon-o-pencil')
+                    ->collapsed(),
+
+                NavigationGroup::make()
+                    ->label(fn (): string => __('navigation.settings'))
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->collapsed(),
+            ])
+//            ->topNavigation()
+            ;
+
     }
 
     public function canAccessPanel(Panel $panel): bool

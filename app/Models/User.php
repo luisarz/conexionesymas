@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\FilamentUser;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
 {
     use HasFactory, Notifiable;
     use HasRoles;
@@ -49,6 +51,13 @@ class User extends Authenticatable implements FilamentUser
             'password' => 'hashed',
         ];
     }
-
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar_url;
+    }
+    public function getFilamentName(): string
+    {
+        return "{$this->name} {$this->last_name}";
+    }
 
 }

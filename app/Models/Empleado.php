@@ -25,27 +25,14 @@ class Empleado extends Model
         'afp',
         'isss',
         'nrc',
-        'salary_day',
-        'salary_month',
-        'contract',
-        'contract_start',
-        'contract_end',
-        'vacation_start',
-        'vacation_end',
-        'salary_xtra_hour_day',
-        'salary_xtra_hour_night',
-        'contract_file',
         'is_active',
         'departamento_id',
         'distrito_id',
         'profesion_id',
         'empresa_id',
-        'cargo_id'
-
     ];
     protected $casts = [
         'photo' => 'array',
-        'contract_file' => 'array'
     ];
     public function fullName()
     {

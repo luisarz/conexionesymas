@@ -13,19 +13,25 @@ use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Form;
 use Filament\GlobalSearch\Actions\Action;
+use Filament\Navigation\NavigationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Filament\Pages\Actions;
 
 class EmpleadoResource extends Resource
 {
     protected static ?string $model = Empleado::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationGroup = 'Recursos Humanos';
 
     protected static ?string $recordTitleAttribute = 'name';
-
+    protected static function configureNavigationGroup(NavigationGroup $group): void
+    {
+        $group->setIcon('heroicon-o-square-2-stack'); // Cambia esto por el ícono que desees
+    }
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'lastname', 'cargo.name', 'profesion.name'];
@@ -199,44 +205,44 @@ class EmpleadoResource extends Resource
                                             ->maxLength(255),
                                         Forms\Components\TextInput::make('nrc')
                                             ->label('NRC (si aplica)'),
-                                        Forms\Components\TextInput::make('salary_day')
-                                            ->label('Salario por Dia')
-                                            ->required()
-                                            ->numeric(),
-                                        Forms\Components\TextInput::make('salary_month')
-                                            ->label('Salario por Mes')
-                                            ->required()
-                                            ->numeric(),
-                                        Forms\Components\TextInput::make('contract')->nullable()
-                                            ->label('Numero de Contrato')
-                                            ->maxLength(255),
-                                        Forms\Components\DatePicker::make('contract_start')
-                                            ->label('Fecha de Inicio de Contrato')
-                                            ->required()
-                                            ->default(now()),
-                                        Forms\Components\DatePicker::make('contract_end')
-                                            ->label('Fecha de Fin de Contrato'),
-                                        Forms\Components\DatePicker::make('vacation_start')
-                                            ->label('Fecha de Inicio de Vacaciones'),
-                                        Forms\Components\DatePicker::make('vacation_end')
-                                            ->label('Fecha de Fin de Vacaciones'),
-                                        Forms\Components\TextInput::make('salary_xtra_hour_day')
-                                            ->label('Salario por Hora Extra Diurna')
-                                            ->required()
-                                            ->numeric(),
-                                        Forms\Components\TextInput::make('salary_xtra_hour_night')
-                                            ->label('Salario por Hora Extra Nocturna')
-                                            ->required()
-                                            ->numeric(),
-                                        Forms\Components\BelongsToSelect::make('cargo_id')
-                                            ->relationship('cargo', 'name')
-                                            ->required(),
-                                        Forms\Components\FileUpload::make('contract_file')
-                                            ->label('Archivo de Contrato en PDF')
-                                            ->directory('contract')
-                                            ->enableDownload()
-                                            ->enableOpen()
-                                            ->acceptedFileTypes(['application/pdf']),
+//                                        Forms\Components\TextInput::make('salary_day')
+//                                            ->label('Salario por Dia')
+//                                            ->required()
+//                                            ->numeric(),
+//                                        Forms\Components\TextInput::make('salary_month')
+//                                            ->label('Salario por Mes')
+//                                            ->required()
+//                                            ->numeric(),
+//                                        Forms\Components\TextInput::make('contract')->nullable()
+//                                            ->label('Numero de Contrato')
+//                                            ->maxLength(255),
+//                                        Forms\Components\DatePicker::make('contract_start')
+//                                            ->label('Fecha de Inicio de Contrato')
+//                                            ->required()
+//                                            ->default(now()),
+//                                        Forms\Components\DatePicker::make('contract_end')
+//                                            ->label('Fecha de Fin de Contrato'),
+//                                        Forms\Components\DatePicker::make('vacation_start')
+//                                            ->label('Fecha de Inicio de Vacaciones'),
+//                                        Forms\Components\DatePicker::make('vacation_end')
+//                                            ->label('Fecha de Fin de Vacaciones'),
+//                                        Forms\Components\TextInput::make('salary_xtra_hour_day')
+//                                            ->label('Salario por Hora Extra Diurna')
+//                                            ->required()
+//                                            ->numeric(),
+//                                        Forms\Components\TextInput::make('salary_xtra_hour_night')
+//                                            ->label('Salario por Hora Extra Nocturna')
+//                                            ->required()
+//                                            ->numeric(),
+//                                        Forms\Components\BelongsToSelect::make('cargo_id')
+//                                            ->relationship('cargo', 'name')
+//                                            ->required(),
+//                                        Forms\Components\FileUpload::make('contract_file')
+//                                            ->label('Archivo de Contrato en PDF')
+//                                            ->directory('contract')
+//                                            ->enableDownload()
+//                                            ->enableOpen()
+//                                            ->acceptedFileTypes(['application/pdf']),
                                         Forms\Components\Toggle::make('is_active')
                                             ->label('Empleado Activo')
                                             ->required(),
@@ -255,8 +261,8 @@ class EmpleadoResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('empresa.name')
                     ->wrap()->sortable(),
-                Tables\Columns\TextColumn::make('cargo.name')
-                    ->sortable(),
+//                Tables\Columns\TextColumn::make('cargo.name')
+//                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->getStateUsing(function (Empleado $record) {
                         return $record->fullName();
@@ -312,6 +318,14 @@ class EmpleadoResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ReplicateAction::make(),
+                    Actions\Action::make('generarContrato')
+                        ->icon('heroicon-o-arrow-down-on-square-stack')
+                        ->label('Generar Contrato')
+                        ->url(fn (Empleado $record) => route('empleado.contrato.generate', $record))
+                        ->openUrlInNewTab()
+                        ->requiresConfirmation('¿Estas seguro de generar el contrato?'),
+
+
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),

@@ -20,26 +20,20 @@ use Illuminate\Support\Str;
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
-
     protected static ?string $label = 'Productos';
-
     protected static ?string $recordTitleAttribute = 'name';
 
     // protected static ?string $navigationGroup = 'Adminsitración';
     // protected static int $navigationPosition = 30;
-
     public static function getNavigationBadge(): string
     {
         return static::getModel()::count();
     }
-
     public static function getNavigationBadgeColor(): string
     {
         return 'warning';
     }
-
     public static function form(Form $form): Form
     {
         return $form
@@ -118,7 +112,6 @@ class ProductResource extends Resource
             ])->columns(3);
 
     }
-
     public static function table(Table $table): Table
     {
         return $table

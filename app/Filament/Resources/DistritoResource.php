@@ -75,7 +75,6 @@ class DistritoResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ReplicateAction::make(),
-
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
@@ -99,8 +98,8 @@ class DistritoResource extends Resource
     {
         return [
             'index' => Pages\ListDistritos::route('/'),
-            'create' => Pages\CreateDistrito::route('/create'),
-            'edit' => Pages\EditDistrito::route('/{record}/edit'),
+//            'create' => Pages\CreateDistrito::route('/create'),
+//            'edit' => Pages\EditDistrito::route('/{record}/edit'),
         ];
     }
 }
